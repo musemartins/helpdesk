@@ -1,0 +1,16 @@
+- Devia dar para fazer upload de ficheiros aquando a edição de uma issue já criada por outro. Neste momento so permite upload aquando a criação de issue
+- Devia dar para ordenar por issue, status, ….
+- Devia dar para ver em que projecto é que estou neste momento (refiro-me ao breadcrumb)
+- Ainda, breadcrumb não existe para issue ?…
+- Não se consegue editar uma issue quando se está a olhar para a issue. Devia dar para editar dentro dela.
+- Não se consegue comentar uma issue criada por outro. Como é que sabemos de quem veio a mensagem. Falta um campo que diz: fulano tal editou ou comentou esta issue na data de XXX.
+- os user estão a receber email quando há uma alteração ?
+- Quando um user altera uma mensagem devia existir um campo a dizer updated by (no menu de issues)
+- Acho que falta um status Support
+- Devia dar para fazer “assign to” outros para alem dos programadores..
+- tentei inserir uma issue e deu-me um erro (anexo)
+- só o administrador e quem criou a tarefa é que devem puder eliminar a issue
+- devia existir uma zona que mostrasse todas as issues abertas, com os comentários todos seguidos…
+- não se vê o ficheiro anexado….
+- Bug : não deixa adicionar uma issue sem comment
+- devia dar para ligar uma issue com outra.
