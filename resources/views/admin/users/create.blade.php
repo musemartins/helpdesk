@@ -55,7 +55,6 @@
                                     <option value="">Select a role</option>
                                     <option value="0">Administrator</option>
                                     <option value="1">User</option>
-                                    <option value="2">Programmer</option>
                                 </select>
                             </div>
                             <div class="form-group @if ($errors->has('accessLevel')) has-error @endif">

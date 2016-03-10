@@ -18,7 +18,9 @@
 
     <link href="{{ url('/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ url('/admin/css/style.css') }}" rel="stylesheet">
-    <link href="/helpdesk/public/admin/css/dataTables.bootstrap.js">
+    <link href="{{ url('/bower_components/dropzone/dist/dropzone.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bower_components/trumbowyg/dist/ui/trumbowyg.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/css/dataTables.bootstrap.css') }}">
 
     @yield('styles')
 
@@ -44,7 +46,7 @@
                     <li class="@yield('home')">
                         <a href="{{ url('/') }}"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
                     </li>
-                    @if (Auth::user()->role == '0')
+                    @if (Auth::user()->role == 0)
                         <li class="@yield('users')">
                             <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -59,9 +61,14 @@
                                 <li><a href="{{ url('/projects/create') }}">Add a Project</a></li>
                             </ul>
                         </li>
-                    @else
+                    @endif
+                    @if (Auth::user()->accessLevel == 1 && Auth::user()->role != 0)
                         <li class="@yield('projects')">
-                            <a href="{{ url('/projects') }}"><i class="fa fa-folder"></i> <span class="nav-label">Projects</span></a>
+                            <a href="{{ url('/projects/mills-parasols') }}"><i class="fa fa-folder"></i> <span class="nav-label">Mills Parasols</span></a>
+                        </li>
+                    @elseif (Auth::user()->accessLevel == 2 && Auth::user()->role != 0)
+                        <li class="@yield('projects')">
+                            <a href="{{ url('/projects/liikenhealth') }}"><i class="fa fa-folder"></i> <span class="nav-label">LiikenHealth</span></a>
                         </li>
                     @endif
                 </ul>
@@ -90,28 +97,30 @@
     </div>
 
     <!-- Mainly scripts -->
-    <script src="{{ url('admin/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ url('admin/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url('/admin/js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ url('/admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
     <!-- Peity -->
-    <script src="{{ url('admin/js/plugins/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/peity/jquery.peity.min.js') }}"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="{{ url('admin/js/inspinia.js') }}"></script>
-    <script src="{{ url('admin/js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ url('/admin/js/inspinia.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/pace/pace.min.js') }}"></script>
 
     <!-- jQuery UI -->
-    <script src="{{ url('admin/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- GITTER -->
-    <script src="{{ url('admin/js/plugins/gritter/jquery.gritter.min.js') }}"></script>
+    <script src="{{ url('/admin/js/plugins/gritter/jquery.gritter.min.js') }}"></script>
 
-    <script src="/helpdesk/public/admin/js/jquery.dataTables.js"></script>
-    <script src="/helpdesk/public/admin/js/jquery.bootstrap.js"></script>
+    <script src="{{ url('/admin/js/jquery.dataTables.js') }}"></script>
+    <!-- <script src="/admin/js/jquery.bootstrap.js"></script> -->
     <!-- SlimScroll -->
-    <script src="{{ url('admin/js/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url('/admin/js/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url('/bower_components/dropzone/dist/dropzone.js') }}"></script>
+    <script src="{{ url('/bower_components/trumbowyg/dist/trumbowyg.min.js') }}"></script>
 
     @yield('scripts')
 

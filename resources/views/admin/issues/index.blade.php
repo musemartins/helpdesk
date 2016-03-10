@@ -2,10 +2,6 @@
 
 @section('projects', 'active')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ url('/admin/css/plugins/datatables/dataTables.bootstrap.css') }}">
-@stop
-
 @section('content')
     
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -16,7 +12,10 @@
                     <a href="{{ url('/') }}">Home</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects') }}">Projects</a>
+                    <a href="#">Projects</a>
+                </li>
+                <li>
+                    <a href="#">{{ $project->name }}</a>
                 </li>
                 <li class="active">
                     <strong>Issues</strong>
@@ -33,7 +32,7 @@
                 <!-- general form elements -->
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <a href="{{ url('/projects/' . $project . '/issue/create') }}" class="pull-right"><i class="fa fa-plus"></i>&nbsp; Add an issue</a>
+                        <a href="{{ url('/projects/' . $slug . '/issue/create') }}" class="pull-right"><i class="fa fa-plus"></i>&nbsp; Add an issue</a>
                     </div>
                     <div class="ibox-content">
                         <table id="usersTable" class="table table-bordered table-hover">
@@ -49,6 +48,9 @@
                                         Status
                                     </th>
                                     <th>
+                                        Updated
+                                    </th>
+                                    <th>
                                         Priority
                                     </th>
                                     <th>Actions</th>
@@ -62,7 +64,7 @@
                                         {{ $issue->title }}
                                     </td>
                                     <td>
-                                        {{ $issue->assigned_to }}
+                                        {{ $users[$key]->name }}
                                     </td>
                                     <td>
                                         {{ $issue->user->name }}
@@ -77,6 +79,11 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if ($issue->updated_at != $issue->created_at)
+                                            {{ $issue->updated_at }}
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if ($issue->priority == 0)
                                             <span class="btn btn-sm btn-danger">High</span>
                                         @elseif ($issue->priority == 1)
@@ -86,10 +93,10 @@
                                         @endif
                                     </td>
                                     <td style="font-size: 24px;">
-                                        <a href="{{ url('/projects/' . $project . '/issue/' . $issue->id . '/show') }}" class="btn btn-primary"><i class="fa fa-search"></i></a>
+                                        <a href="{{ url('/projects/' . $slug . '/issue/' . $issue->id . '/show') }}" class="btn btn-primary"><i class="fa fa-search"></i></a>
                                         @if (Auth::user()->id == $issue->user->id || Auth::user()->role == '0')
-                                            <a href="{{ url('/projects/' . $project . '/issue/' . $issue->id . '/edit') }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="{{ url('/projects/' . $project . '/issue/' . $issue->id . '/delete') }}" class="btn btn-primary"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ url('/projects/' . $slug . '/issue/' . $issue->id . '/edit') }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="{{ url('/projects/' . $slug . '/issue/' . $issue->id . '/delete') }}" class="btn btn-primary"><i class="fa fa-trash"></i></a>
                                         @endif
                                     </td>
                                 </tr>
@@ -106,11 +113,6 @@
 
 @section('scripts')
     <!-- DataTables -->
-    <script src="{{ url('/admin/js/plugins/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ url('/admin/js/plugins/datatables/dataTables.bootstrap.js') }}"></script>
-    <!-- SlimScroll -->
-    <script src="{{ url('/admin/js/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
-    <!-- page script -->
     <script>
         $(function () {
             $('#usersTable').DataTable();

@@ -148,6 +148,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Kamaln7\Toastr\ToastrServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -2,15 +2,11 @@
 
 @section('projects', 'active')
 
-@section('styles')
-    <link rel="stylesheet" href="/helpdesk/public//bower_components/trumbowyg/dist/ui/trumbowyg.css">
-@stop
-
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Projects</h2>
+            <h2>{{ $project->name }}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ url('/') }}">Home</a>
@@ -19,7 +15,7 @@
                     <a href="{{ url('/projects') }}">Projects</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects/' . $project) }}">Issues</a>
+                    <a href="{{ url('/projects/' . $slug) }}">{{ $project->name }}</a>
                 </li>
                 <li class="active">
                     <strong>New Issue</strong>
@@ -34,7 +30,7 @@
                 <!-- general form elements -->
                 <div class="ibox float-e-margins">
                     <!-- form start -->
-                    <form role="form" action="{{ url('projects/' . $project . '/issue/create') }}" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="{{ url('projects/' . $slug . '/issue/create') }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="ibox-content">
                             @if ($errors->has())
@@ -46,15 +42,27 @@
                             @endif
                             <div class="form-group @if ($errors->has('title')) has-error @endif">
                                 <label for="title">Title</label>
-                                <input type="text" name="title" id="title" class="form-control" placeholder="Issue Title">
+                                <input type="text" name="title" id="title" class="form-control" placeholder="Issue Title" >
                             </div>
-                            <div class="form-group @if ($errors->has('programmer')) has-error @endif">
-                                <label for="programmer">Assign to</label>
-                                <select class="form-control" id="programmer" name="programmer">
+                            <div class="form-group @if ($errors->has('user')) has-error @endif">
+                                <label for="user">Assign to</label>
+                                <select class="form-control" id="user" name="user">
                                     <option value="">Select a person</option>
-                                    <option value="Carlos Martins">Carlos Martins</option>
-                                    <option value="João Sá">João Sá</option>
-                                    <option value="Tiago Silva">Tiago Silva</option>
+                                    @for ($i = 0; $i < count($users); $i++)
+                                        @if ($slug == 'liikenhealth')
+                                            @if (Auth::user()->id != $users[$i]->id && $users[$i]->accessLevel == 2 || Auth::user()->id != $users[$i]->id && $users[$i]->accessLevel == 0)
+                                                <option value="{{ $users[$i]->id }}">{{ $users[$i]->name }}</option>
+                                            @else
+                                                $i++;
+                                            @endif
+                                        @elseif ($slug == 'mills-parasols')
+                                            @if (Auth::user()->id != $users[$i]->id && $users[$i]->accessLevel == 1 || Auth::user()->id != $users[$i]->id && $users[$i]->accessLevel == 0)
+                                                <option value="{{ $users[$i]->id }}">{{ $users[$i]->name }}</option>
+                                            @else
+                                                $i++;
+                                            @endif
+                                        @endif
+                                    @endfor
                                 </select>
                             </div>
                             <div class="form-group @if ($errors->has('priority')) has-error @endif"">
@@ -79,16 +87,7 @@
                                 <label for="issue">Issue</label>
                                 <textarea name="issue" id="issue"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="uploadfiles">Upload Files <a><i class="fa fa-plus"></i></a></label>
-                            </div>
-                            <div class="files">
-                                <div class="form-group">
-                                    <label for="files">File 1</label>
-                                    <input type="file" name="file[]">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Insert</button>
+                            <button type="submit" class="btn btn-primary" id="submit-all">Insert</button>
                         </div><!-- /.box-body -->
                     </form>
                 </div><!-- /.box -->
@@ -100,27 +99,12 @@
 @stop
 
 @section('scripts')
-    <script src="/helpdesk/public/bower_components/trumbowyg/dist/trumbowyg.min.js"></script>
-    <script src="/helpdesk/public/bower_components/trumbowyg/dist/langs/fr.min.js"></script>
-    <script src="/helpdesk/public/bower_components/trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
-    <script src="/helpdesk/public/bower_components/trumbowyg/dist/plugins/base64/trumbowyg.base64.js"></script>
-    <script src="/helpdesk/public/bower_components/trumbowyg/dist/plugins/colors/trumbowyg.colors.js"></script>
     <script>
         
         $(document).ready(function() {
 
             $('#issue').trumbowyg();
 
-            var counter = 2;
-
-            $('body').on('click', '.fa-plus', function() {
-                
-                $('.files').append('<div class="form-group"><label for="files">File ' + counter + '</label><input type="file" name="file[]"></div>');
-
-                counter += 1;
-            });
-
         });
-
     </script>
 @stop

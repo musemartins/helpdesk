@@ -55,7 +55,6 @@
                                     <option value="">Select a role</option>
                                     <option value="0" @if ($user->role == 0) selected @endif>Administrator</option>
                                     <option value="1" @if ($user->role == 1) selected @endif>User</option>
-                                    <option value="2" @if ($user->role == 2) selected @endif>Programmer</option>
                                 </select>
                             </div>
                             <div class="form-group @if ($errors->has('accessLevel')) has-error @endif">

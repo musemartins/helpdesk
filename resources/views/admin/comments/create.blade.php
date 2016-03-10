@@ -2,15 +2,11 @@
 
 @section('projects', 'active')
 
-@section('styles')
-    <link rel="stylesheet" href="/bower_components/trumbowyg/dist/ui/trumbowyg.css">
-@stop
-
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Projects</h2>
+            <h2>{{ $project->name }}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ url('/') }}">Home</a>
@@ -19,10 +15,10 @@
                     <a href="{{ url('/projects') }}">Projects</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects/' . $project) }}">Issues</a>
+                    <a href="{{ url('/projects/' . $slug) }}">{{ $project->name }}</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects/' . $project . '/issue/' . $issue . '/show') }}">Issue</a>
+                    <a href="{{ url('/projects/' . $slug . '/issue/' . $issue . '/show') }}">{{ $issueInfo->title }}</a>
                 </li>
                 <li class="active">
                     <strong>New Reply</strong>
@@ -37,7 +33,7 @@
                 <!-- general form elements -->
                 <div class="ibox float-e-margins">
                     <!-- form start -->
-                    <form role="form" action="{{ url('projects/' . $project . '/issue/' . $issue . '/create') }}" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="{{ url('projects/' . $slug . '/issue/' . $issue . '/create') }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="ibox-content">
                             @if ($errors->has())
@@ -63,11 +59,6 @@
 @stop
 
 @section('scripts')
-    <script src="/bower_components/trumbowyg/dist/trumbowyg.min.js"></script>
-    <script src="/bower_components/trumbowyg/dist/langs/fr.min.js"></script>
-    <script src="/bower_components/trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
-    <script src="/bower_components/trumbowyg/dist/plugins/base64/trumbowyg.base64.js"></script>
-    <script src="/bower_components/trumbowyg/dist/plugins/colors/trumbowyg.colors.js"></script>
     <script>
 
         $(document).ready(function() {

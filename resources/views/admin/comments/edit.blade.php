@@ -10,7 +10,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Projects</h2>
+            <h2>{{ $project->name }}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ url('/') }}">Home</a>
@@ -19,13 +19,13 @@
                     <a href="{{ url('/projects') }}">Projects</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects/' . $project) }}">Issues</a>
+                    <a href="{{ url('/projects/' . $slug) }}">{{ $project->name }}</a>
                 </li>
                 <li>
-                    <a href="{{ url('/projects/' . $project . '/issue/' . $issue . '/show') }}">Issue</a>
+                    <a href="{{ url('/projects/' . $slug . '/issue/' . $issue . '/show') }}">{{ $issueInfo->title }}</a>
                 </li>
                 <li class="active">
-                    <strong>Edit Reply</strong>
+                    <strong>New Reply</strong>
                 </li>
             </ol>
         </div>
@@ -37,7 +37,7 @@
                 <!-- general form elements -->
                 <div class="ibox float-e-margins">
                     <!-- form start -->
-                    <form role="form" action="{{ url('projects/' . $project . '/issue/' . $issue . '/answer/' . $id . '/edit') }}" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="{{ url('projects/' . $slug . '/issue/' . $issue . '/answer/' . $id . '/edit') }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="ibox-content">
                             @if ($errors->has())

@@ -39,10 +39,10 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $project->name }}</td>
                                     <td style="font-size: 24px;">
-                                        <a href="{{ url('/projects/' . $project->id) }}" class="btn btn-primary"><i class="fa fa-search"></i></a>
+                                        <a href="{{ url('/projects/' . $project->slug) }}" class="btn btn-primary"><i class="fa fa-search"></i></a>
                                         @if (Auth::user()->role == '0')
-                                            <a href="{{ url('/projects/' . $project->id . '/edit') }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="{{ url('/projects/' . $project->id . '/delete') }}" class="btn btn-primary"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ url('/projects/' . $project->slug . '/edit') }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="{{ url('/projects/' . $project->slug . '/delete') }}" class="btn btn-primary"><i class="fa fa-trash"></i></a>
                                         @endif
                                     </td>
                                 </tr>

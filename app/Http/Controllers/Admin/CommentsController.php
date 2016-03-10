@@ -7,17 +7,22 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Issue;
+use App\Models\Project;
 use App\Models\Comment;
 use Auth;
 
 class CommentsController extends Controller
 {
-    public function create($project, $issue)
+    public function create($slug, $issue)
     {
-        return view('admin.comments.create', compact('project', 'issue'));
+        $project = Project::findBySlug($slug);
+
+        $issueInfo = Issue::findOrFail($issue);
+
+        return view('admin.comments.create', compact('slug', 'issue', 'project', 'issueInfo'));
     }
 
-    public function store(Request $request, $project, $issue)
+    public function store(Request $request, $slug, $issue)
     {
         $this->validate($request, [
             'message'   =>  'required'
@@ -31,17 +36,21 @@ class CommentsController extends Controller
             'user_id'   =>  $userID
         ]);
 
-        return redirect('/projects/' . $project . '/issue/' . $issue . '/show');
+        return redirect('/projects/' . $slug . '/issue/' . $issue . '/show');
     }
 
-    public function edit($project, $issue, $id)
+    public function edit($slug, $issue, $id)
     {
+        $project = Project::findBySlug($slug);
+
+        $issueInfo = Issue::findOrFail($issue);
+
         $comment = Comment::findOrFail($id);
 
-        return view('admin.comments.edit', compact('comment', 'project', 'issue', 'id'));
+        return view('admin.comments.edit', compact('comment', 'slug', 'issue', 'id', 'project', 'issueInfo'));
     }
 
-    public function update(Request $request, $project, $issue, $id)
+    public function update(Request $request, $slug, $issue, $id)
     {
         $this->validate($request, [
             'message'   =>  'required'
@@ -51,6 +60,6 @@ class CommentsController extends Controller
         $comment->comment = $request->get('message');
         $comment->save();
 
-        return redirect('/projects/' . $project . '/issue/' . $issue . '/show');
+        return redirect('/projects/' . $slug . '/issue/' . $issue . '/show');
     }
 }
