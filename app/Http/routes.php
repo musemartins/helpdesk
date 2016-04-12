@@ -2,11 +2,13 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-    //Route::auth();
+    Route::auth();
     
-    Route::get('/login', function() {
+    /*Route::get('/login', function() {
         return view('welcome');
     });
+
+    Route::get('/bjeras', 'AuthController@fds');
 
     Route::get('/cmd', function () {
         chdir('../');
@@ -15,7 +17,8 @@ Route::group(['middleware' => 'web'], function () {
         $cmd = shell_exec ('php artisan view:clear');
         return $cmd;
     });
-
+    */
+    Route::get('/bjeras', 'AuthController@fds');
     Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/', 'Admin\DashboardController@index');

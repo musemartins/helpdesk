@@ -1,11 +1,19 @@
 @extends('admin.layouts.master')
 
-@section('projects', 'active')
+@if (Auth::user()->accessLevel != 0)
+    @section('projects', 'active')
+@endif
+
+@if (Auth::user()->accessLevel == 0 && $slug == 'mills-parasols')
+    @section('mills', 'active')
+@elseif (Auth::user()->accessLevel == 0 && $slug == 'liikenhealth')
+    @section('liiken', 'active')
+@endif
 
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-4">
+        <div class="col-sm-12">
             <h2>{{ $project->name }}</h2>
             <ol class="breadcrumb">
                 <li>

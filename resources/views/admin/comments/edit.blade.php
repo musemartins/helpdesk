@@ -1,10 +1,14 @@
 @extends('admin.layouts.master')
 
-@section('projects', 'active')
+@if (Auth::user()->accessLevel != 0)
+    @section('projects', 'active')
+@endif
 
-@section('styles')
-    <link rel="stylesheet" href="/bower_components/trumbowyg/dist/ui/trumbowyg.css">
-@stop
+@if (Auth::user()->accessLevel == 0 && $slug == 'mills-parasols')
+    @section('mills', 'active')
+@elseif (Auth::user()->accessLevel == 0 && $slug == 'liikenhealth')
+    @section('liiken', 'active')
+@endif
 
 @section('content')
 

@@ -20,6 +20,9 @@
     <link href="{{ url('/admin/css/style.css') }}" rel="stylesheet">
     <link href="{{ url('/bower_components/dropzone/dist/dropzone.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/bower_components/trumbowyg/dist/ui/trumbowyg.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url('/admin/css/dataTables.bootstrap.css') }}"> -->
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url('/admin/css/dataTables.bootstrap.css') }}">
 
     @yield('styles')
@@ -68,6 +71,13 @@
                         </li>
                     @elseif (Auth::user()->accessLevel == 2 && Auth::user()->role != 0)
                         <li class="@yield('projects')">
+                            <a href="{{ url('/projects/liikenhealth') }}"><i class="fa fa-folder"></i> <span class="nav-label">LiikenHealth</span></a>
+                        </li>
+                    @elseif (Auth::user()->accessLevel == 0 && Auth::user()->role != 0)
+                        <li class="@yield('mills')">
+                            <a href="{{ url('/projects/mills-parasols') }}"><i class="fa fa-folder"></i> <span class="nav-label">Mills Parasols</span></a>
+                        </li>
+                        <li class="@yield('liiken')">
                             <a href="{{ url('/projects/liikenhealth') }}"><i class="fa fa-folder"></i> <span class="nav-label">LiikenHealth</span></a>
                         </li>
                     @endif

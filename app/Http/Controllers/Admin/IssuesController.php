@@ -127,6 +127,9 @@ class IssuesController extends Controller
         ]);
 
         $issue = Issue::findOrFail($id);
+
+        $userID = $issue->user_id;
+
         $issue->assigned_to =   $request->get('user');
         $issue->title       =   $request->get('title');
         $issue->question    =   $request->get('issue');
@@ -175,10 +178,11 @@ class IssuesController extends Controller
 
         $issue = Issue::findOrFail($id);
         $userID = $issue->user_id;
+        $assignedTo = $issue->assigned_to;
         $issue->priority = $newPriority;
         $issue->save();
 
-        $userAssigned = User::where('id', $issue->assigned_to)->first();
+        $userAssigned = User::where('id', $assignedTo)->first();
         $userOwner = User::where('id', $userID)->first();
         $url = "dev.flexefelina.pt/helpdesk/public/projects/" . $slug . "/issue/" . $id . "/show";
         $data = [
@@ -195,7 +199,6 @@ class IssuesController extends Controller
 
             $m->to($data[2], $data[3])->subject('New update on your ticket!');
         });
-
     }
 
     public function changeStatus(Request $request, $slug, $id)
@@ -204,12 +207,13 @@ class IssuesController extends Controller
 
         $issue = Issue::findOrFail($id);
         $userID = $issue->user_id;
-
-        $issue->assigned_to = $newStatus;
+        $assignedTo = $issue->assigned_to;
+        $issue->status = $newStatus;
         $issue->save();
 
-        $userAssigned = User::where('id', $request->get('user'))->first();
+        $userAssigned = User::where('id', $assignedTo)->first();
         $userOwner = User::where('id', $userID)->first();
+        
         $url = "dev.flexefelina.pt/helpdesk/public/projects/" . $slug . "/issue/" . $id . "/show";
         $data = [
             $userAssigned->email,
@@ -218,7 +222,6 @@ class IssuesController extends Controller
             $userOwner->name,
             $url
         ];
-        //$data[0], $data[1]
 
         Mail::send('emails.update', ['data' => $data], function ($m) use ($data) {
             $m->from('mparasols@gmail', 'Helpdesk');
@@ -255,7 +258,6 @@ class IssuesController extends Controller
 
             $m->to($data[2], $data[3])->subject('New update on your ticket!');
         });
-
     }
 
     public function getUpload($slug, $id)

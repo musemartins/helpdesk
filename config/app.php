@@ -149,6 +149,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Kamaln7\Toastr\ToastrServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...
